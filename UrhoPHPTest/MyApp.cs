@@ -5,6 +5,12 @@ using Urho.Actions;
 using Urho.Gui;
 using Urho.Shapes;
 
+using Library;
+
+using Pchp.Core;
+using Pchp.Core.Reflection;
+using Pchp.Library;
+
 namespace UrhoPHPTest
 {
     public class MyApp : Application
@@ -32,9 +38,16 @@ namespace UrhoPHPTest
         {
             base.Start();
 
+            //var cl = new PHPLib.Class1();
+            //var greet = cl.GetGreet();
+
+            var ctx = Pchp.Core.Context.CreateEmpty();
+            var greeter = new Greeter(ctx);
+            string greet = greeter.GetGreet().ToString();
+
             // UI text 
             var helloText = new Text(Context);
-            helloText.Value = "Hello World from UrhoSharp";
+            helloText.Value = greet;
             helloText.HorizontalAlignment = HorizontalAlignment.Center;
             helloText.VerticalAlignment = VerticalAlignment.Top;
             helloText.SetColor(new Color(r: 0.5f, g: 1f, b: 1f));
