@@ -39,15 +39,11 @@ namespace UrhoPHPTest
             base.Start();
 
             var ctx = Pchp.Core.Context.CreateEmpty();
-            var greeter = new Greeter(ctx);
-            string greet = greeter.GetGreet().ToString();
-
-            var cc = new CameraControl(ctx);
 
             // UI text 
             var aa = new Text();
             var helloText = new Text(Context);
-            helloText.Value = cc.rekni().ToString();
+            helloText.Value = "Greetings";
             helloText.HorizontalAlignment = HorizontalAlignment.Center;
             helloText.VerticalAlignment = VerticalAlignment.Top;
             helloText.SetColor(new Color(r: 0.5f, g: 1f, b: 1f));
