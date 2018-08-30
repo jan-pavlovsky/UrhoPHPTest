@@ -10,7 +10,17 @@ namespace Library {
 		}
 		
 		public function GetGreet() {
-			return "A changed PHPGreet!!!";
+			return "A new changed PHPGreet!!!";
+		}
+	}
+
+	class CameraControl {
+		public $touchSensitivity = 2.0;
+
+		public $ahoj = 0;
+
+		public function rekni() {
+			return "aa";
 		}
 	}
 }
