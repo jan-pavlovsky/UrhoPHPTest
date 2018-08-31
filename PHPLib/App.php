@@ -41,6 +41,12 @@ class App
 
             $this->scene = new Scene();
 
-            
+             // Create a node for the Earth
+             $this->rootNode = $this->scene->CreateChild();
+             $this->rootNode->Position = new Vector3(0, 0, 20);
+
+             $this->earthNode = $this->rootNode->CreateChild();
+             $this->earthNode->SetScale(5);
+             $this->earthNode->Rotation = new Quaternion(0, 180, 0);
         }
 }

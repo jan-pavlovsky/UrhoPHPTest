@@ -23,6 +23,8 @@ namespace UrhoPHPTest
         {
             helloText = ((Text)app.helloText.AsObject());
             scene = ((Scene)app.scene.AsObject());
+            rootNode = ((Node)app.rootNode.AsObject());
+            earthNode = ((Node)app.earthNode.AsObject());
         }
 
         [Preserve]
@@ -42,18 +44,10 @@ namespace UrhoPHPTest
         {
             base.Start();
 
+            //creating empty PHP context for utility use
             var ctx = Pchp.Core.Context.CreateEmpty();
-
-            //var a = new App(ctx, Pchp.Core.PhpValue.Create("ahoj z C#"), this.Context);
-
-            // UI text 
-            //var helloText = new Text();
-            //helloText.Value = "difGreetings";
-            //helloText.HorizontalAlignment = HorizontalAlignment.Center;
-            //helloText.VerticalAlignment = VerticalAlignment.Top;
-            //helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
-            //helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
            
+            //The PHP app class containing all the application 
             app = new App(ctx, "Hey from C#");
 
             app.Start();
@@ -66,15 +60,9 @@ namespace UrhoPHPTest
             UI.Root.AddChild(helloText);
 
             // 3D scene with Octree
-            //scene = new Scene();
-            scene.CreateComponent<Octree>();
 
-            // Create a node for the Earth
-            rootNode = scene.CreateChild();
-            rootNode.Position = new Vector3(0, 0, 20);
-            earthNode = rootNode.CreateChild();
-            earthNode.SetScale(5f);
-            earthNode.Rotation = new Quaternion(0, 180, 0);
+            // Must be called from C# for now, because there are no Generics available in php language
+            scene.CreateComponent<Octree>();
 
             // Create a static model component - Sphere:
             var earth = earthNode.CreateComponent<Sphere>();
