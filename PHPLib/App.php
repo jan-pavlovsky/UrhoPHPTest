@@ -35,10 +35,12 @@ class App
         {
             // UI text 
             $this->helloText = new Gui\Text();
-            $this->helloText->Value = "Yaay, its php";
+            $this->helloText->Value = "Yaay, hello from php";
             $this->helloText->HorizontalAlignment = Gui\HorizontalAlignment::Center;
             $this->helloText->VerticalAlignment = Gui\VerticalAlignment::Top;
 
-            //$this->scene = new Gui\Scene();
+            $this->scene = new Scene();
+
+            
         }
 }

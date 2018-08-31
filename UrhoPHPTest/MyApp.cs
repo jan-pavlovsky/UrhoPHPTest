@@ -9,11 +9,21 @@ namespace UrhoPHPTest
 {
     public class MyApp : Application
     {
+        Text helloText;
         Node cameraNode;
         Node earthNode;
         Node rootNode;
         Scene scene;
         float yaw, pitch;
+
+        App app;
+
+        //An utility function making direct references from C# project to the classes created in PHP.
+        private void CreatePHPReferences()
+        {
+            helloText = ((Text)app.helloText.AsObject());
+            scene = ((Scene)app.scene.AsObject());
+        }
 
         [Preserve]
         public MyApp(ApplicationOptions options) : base(options) { }
@@ -44,17 +54,19 @@ namespace UrhoPHPTest
             //helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
             //helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
            
-            var app = new App(ctx, "ahoj z C#");
+            app = new App(ctx, "Hey from C#");
 
             app.Start();
 
-            ((Text)app.helloText.AsObject()).SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
-            ((Text)app.helloText.AsObject()).SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+            CreatePHPReferences();
 
-            UI.Root.AddChild((UIElement)app.helloText.AsObject());
+            helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
+            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+
+            UI.Root.AddChild(helloText);
 
             // 3D scene with Octree
-            scene = new Scene();
+            //scene = new Scene();
             scene.CreateComponent<Octree>();
 
             // Create a node for the Earth
