@@ -65,8 +65,10 @@ namespace UrhoPHPTest
             scene.CreateComponent<Octree>();
 
             // Create a static model component - Sphere:
-            var earth = earthNode.CreateComponent<Sphere>();
-            earth.SetMaterial(ResourceCache.GetMaterial("Materials/Earth.xml")); // or simply Material.FromImage("Textures/Earth.jpg")
+            //var earth = earthNode.CreateComponent<Sphere>();
+            //earth.SetMaterial(ResourceCache.GetMaterial("Materials/Earth.xml")); // or simply Material.FromImage("Textures/Earth.jpg")
+
+            app.createEarthTexture();
 
             // Same steps for the Moon
             var moonNode = earthNode.CreateChild();

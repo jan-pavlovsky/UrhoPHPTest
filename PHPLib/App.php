@@ -49,4 +49,10 @@ class App
              $this->earthNode->SetScale(5);
              $this->earthNode->Rotation = new Quaternion(0, 180, 0);
         }
+
+        public function createEarthTexture() {
+            // Create a static model component - Sphere:
+            $earthSphere = UtilityFunctions::CreateSphereComponent($this->earthNode);
+            $earthSphere->SetMaterial(Material::FromImage("Textures/Earth.jpg"));
+        }
 }

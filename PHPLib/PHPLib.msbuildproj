@@ -20,6 +20,10 @@
     <PackageReference Include="UrhoSharp" Version="1.8.93" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PHPUtilityLib\PHPUtilityLib.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <RestoreSources>$(RestoreSources);../packages/UrhoSharp.1.8.51;https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
