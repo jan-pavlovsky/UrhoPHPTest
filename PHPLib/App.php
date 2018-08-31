@@ -40,6 +40,7 @@ class App
             $this->helloText->VerticalAlignment = Gui\VerticalAlignment::Top;
 
             $this->scene = new Scene();
+            UtilityFunctions::CreateOctree($this->scene);
 
              // Create a node for the Earth
              $this->rootNode = $this->scene->CreateChild();
@@ -54,5 +55,14 @@ class App
             // Create a static model component - Sphere:
             $earthSphere = UtilityFunctions::CreateSphereComponent($this->earthNode);
             $earthSphere->SetMaterial(Material::FromImage("Textures/Earth.jpg"));
+        }
+
+        public function createMoon() {
+            $this->moonNode = $this->earthNode->CreateChild();
+            $this->moonNode->SetScale(0.27); // Relative size of the Moon is 1738.1km/6378.1km
+            $this->moonNode->Position = new Vector3(1.2, 0, 0);
+            
+            $moon = UtilityFunctions::CreateSphereComponent($this->moonNode);
+            $moon->SetMaterial(Material::FromImage("Textures/Moon.jpg"));
         }
 }

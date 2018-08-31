@@ -11,5 +11,10 @@ namespace Urho
         {
             return node.CreateComponent<Sphere>();
         }
+
+        public static Octree CreateOctree(Scene scene)
+        {
+            return scene.CreateComponent<Octree>();
+        }
     }
 }

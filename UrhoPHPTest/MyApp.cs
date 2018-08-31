@@ -62,7 +62,7 @@ namespace UrhoPHPTest
             // 3D scene with Octree
 
             // Must be called from C# for now, because there are no Generics available in php language
-            scene.CreateComponent<Octree>();
+            //scene.CreateComponent<Octree>();
 
             // Create a static model component - Sphere:
             //var earth = earthNode.CreateComponent<Sphere>();
@@ -70,12 +70,7 @@ namespace UrhoPHPTest
 
             app.createEarthTexture();
 
-            // Same steps for the Moon
-            var moonNode = earthNode.CreateChild();
-            moonNode.SetScale(0.27f); // Relative size of the Moon is 1738.1km/6378.1km
-            moonNode.Position = new Vector3(1.2f, 0, 0);
-            var moon = moonNode.CreateComponent<Sphere>();
-            moon.SetMaterial(Material.FromImage("Textures/Moon.jpg"));
+            app.createMoon();
 
             // Clouds
             var cloudsNode = earthNode.CreateChild();
