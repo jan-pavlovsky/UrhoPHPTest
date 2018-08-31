@@ -71,7 +71,7 @@
       <HintPath>..\packages\Peachpie.CodeAnalysis.0.9.0-CI01042\lib\netstandard2.0\Peachpie.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Peachpie.Library, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
-      <HintPath>..\packages\Peachpie.Library.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Library.dll</HintPath>
+      <HintPath>..\packages\Peachpie.Library.0.9.0-CI01101\lib\netstandard2.0\Peachpie.Library.dll</HintPath>
     </Reference>
     <Reference Include="Peachpie.Library.MsSql, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
       <HintPath>..\packages\Peachpie.Library.MsSql.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Library.MsSql.dll</HintPath>
@@ -83,7 +83,10 @@
       <HintPath>..\packages\Peachpie.Library.Network.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Library.Network.dll</HintPath>
     </Reference>
     <Reference Include="Peachpie.Library.PDO, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
-      <HintPath>..\packages\Peachpie.Library.PDO.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Library.PDO.dll</HintPath>
+      <HintPath>..\packages\Peachpie.Library.PDO.0.9.0-CI01101\lib\netstandard2.0\Peachpie.Library.PDO.dll</HintPath>
+    </Reference>
+    <Reference Include="Peachpie.Library.PDO.MySQL, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
+      <HintPath>..\packages\Peachpie.Library.PDO.MySQL.0.9.0-CI01101\lib\netstandard2.0\Peachpie.Library.PDO.MySQL.dll</HintPath>
     </Reference>
     <Reference Include="Peachpie.Library.Scripting, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
       <HintPath>..\packages\Peachpie.Library.Scripting.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Library.Scripting.dll</HintPath>
@@ -95,7 +98,7 @@
       <HintPath>..\packages\Peachpie.Microsoft.CodeAnalysis.0.6.0\lib\netstandard1.5\Peachpie.Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Peachpie.Runtime, Version=0.9.0.0, Culture=neutral, PublicKeyToken=5b4bee2bf1f98593, processorArchitecture=MSIL">
-      <HintPath>..\packages\Peachpie.Runtime.0.9.0-CI01042\lib\netstandard2.0\Peachpie.Runtime.dll</HintPath>
+      <HintPath>..\packages\Peachpie.Runtime.0.9.0-CI01101\lib\netstandard2.0\Peachpie.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PhpLib1, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

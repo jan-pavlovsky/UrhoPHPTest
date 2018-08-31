@@ -5,12 +5,6 @@ using Urho.Actions;
 using Urho.Gui;
 using Urho.Shapes;
 
-using Library;
-
-using Pchp.Core;
-using Pchp.Core.Reflection;
-using Pchp.Library;
-
 namespace UrhoPHPTest
 {
     public class MyApp : Application
@@ -40,18 +34,27 @@ namespace UrhoPHPTest
 
             var ctx = Pchp.Core.Context.CreateEmpty();
 
+            //var a = new App(ctx, Pchp.Core.PhpValue.Create("ahoj z C#"), this.Context);
+
             // UI text 
-            var aa = new Text();
-            var helloText = new Text(Context);
-            helloText.Value = "Greetings";
-            helloText.HorizontalAlignment = HorizontalAlignment.Center;
-            helloText.VerticalAlignment = VerticalAlignment.Top;
-            helloText.SetColor(new Color(r: 0.5f, g: 1f, b: 1f));
-            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
-            UI.Root.AddChild(helloText);
+            //var helloText = new Text();
+            //helloText.Value = "difGreetings";
+            //helloText.HorizontalAlignment = HorizontalAlignment.Center;
+            //helloText.VerticalAlignment = VerticalAlignment.Top;
+            //helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
+            //helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+           
+            var app = new App(ctx, "ahoj z C#");
+
+            app.Start();
+
+            ((Text)app.helloText.AsObject()).SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
+            ((Text)app.helloText.AsObject()).SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+
+            UI.Root.AddChild((UIElement)app.helloText.AsObject());
 
             // 3D scene with Octree
-            scene = new Scene(Context);
+            scene = new Scene();
             scene.CreateComponent<Octree>();
 
             // Create a node for the Earth
@@ -94,7 +97,7 @@ namespace UrhoPHPTest
             var camera = cameraNode.CreateComponent<Camera>();
 
             // Viewport
-            var viewport = new Viewport(Context, scene, camera, null);
+            var viewport = new Viewport(scene, camera, null);
             Renderer.SetViewport(0, viewport);
             //viewport.RenderPath.Append(CoreAssets.PostProcess.FXAA2);
 
