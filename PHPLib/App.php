@@ -18,10 +18,17 @@ class App
     public $UrhoContext;
 
     public $helloText;
-    public $cameraNode;
     public $earthNode;
     public $rootNode;
+    public $cloudsNode;
+    public $cameraNode;
+
+    public $camera;
+    public $viewport;
     public $scene;
+    public $lightNode;
+    public $light;
+
     public $yaw;
     public $pitch;
 
@@ -65,4 +72,36 @@ class App
             $moon = UtilityFunctions::CreateSphereComponent($this->moonNode);
             $moon->SetMaterial(Material::FromImage("Textures/Moon.jpg"));
         }
+
+        public function createClouds(Material $textureMaterial)
+        {
+            // Clouds
+            $this->cloudsNode = $this->earthNode->CreateChild();
+            $this->cloudsNode->SetScale(1.02);
+            
+            $clouds = UtilityFunctions::CreateSphereComponent($this->cloudsNode);
+
+            $clouds->SetMaterial($textureMaterial);
+        }
+
+        public function createLight()
+        {
+            // Light
+            $this->lightNode = $this->scene->CreateChild();
+            $this->light = UtilityFunctions::createLight($this->lightNode);
+            $this->light->LightType = LightType::Directional;
+            $this->light->Range = 20;
+            $this->light->Brightness = 1;
+            $this->lightNode->SetDirection(new Vector3(1, -0.25, 1.0));
+        }
+        
+        public function createCameraAndView()
+        {
+            // Camera
+            $this->cameraNode = $this->scene->CreateChild();
+            $this->camera = UtilityFunctions::CreateCamera($this->cameraNode);
+            //$rp = new RenderPath();
+            //$this->viewport = new Viewport($this->scene, $this->camera, $rp);
+        }
+
 }

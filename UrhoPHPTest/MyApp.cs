@@ -11,9 +11,12 @@ namespace UrhoPHPTest
     {
         Text helloText;
         Node cameraNode;
+        Camera camera;
         Node earthNode;
         Node rootNode;
+        Node cloudsNode;
         Scene scene;
+        Viewport viewport;
         float yaw, pitch;
 
         App app;
@@ -25,6 +28,9 @@ namespace UrhoPHPTest
             scene = ((Scene)app.scene.AsObject());
             rootNode = ((Node)app.rootNode.AsObject());
             earthNode = ((Node)app.earthNode.AsObject());
+            cloudsNode = ((Node)app.cloudsNode.AsObject());
+            viewport = ((Viewport)app.viewport.AsObject());
+            camera = ((Camera)app.camera.AsObject());
         }
 
         [Preserve]
@@ -52,52 +58,42 @@ namespace UrhoPHPTest
 
             app.Start();
 
-            CreatePHPReferences();
-
-            helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
-            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
-
-            UI.Root.AddChild(helloText);
-
-            // 3D scene with Octree
-
-            // Must be called from C# for now, because there are no Generics available in php language
-            //scene.CreateComponent<Octree>();
-
-            // Create a static model component - Sphere:
-            //var earth = earthNode.CreateComponent<Sphere>();
-            //earth.SetMaterial(ResourceCache.GetMaterial("Materials/Earth.xml")); // or simply Material.FromImage("Textures/Earth.jpg")
-
+            // Earth and Moon
             app.createEarthTexture();
-
             app.createMoon();
 
-            // Clouds
-            var cloudsNode = earthNode.CreateChild();
-            cloudsNode.SetScale(1.02f);
-            var clouds = cloudsNode.CreateComponent<Sphere>();
+            //Clouds
             var cloudsMaterial = new Material();
             cloudsMaterial.SetTexture(TextureUnit.Diffuse, ResourceCache.GetTexture2D("Textures/Earth_Clouds.jpg"));
             cloudsMaterial.SetTechnique(0, CoreAssets.Techniques.DiffAddAlpha);
-            clouds.SetMaterial(cloudsMaterial);
+
+            app.createClouds(cloudsMaterial);
 
             // Light
-            Node lightNode = scene.CreateChild();
-            var light = lightNode.CreateComponent<Light>();
-            light.LightType = LightType.Directional;
-            light.Range = 20;
-            light.Brightness = 1f;
-            lightNode.SetDirection(new Vector3(1f, -0.25f, 1.0f));
+            app.createLight();
 
-            // Camera
-            cameraNode = scene.CreateChild();
-            var camera = cameraNode.CreateComponent<Camera>();
+            app.createCameraAndView();
 
-            // Viewport
+            //Create the references to objects created in PHP inside MyApp UrhoSharp Application
+            CreatePHPReferences();
+
+            // Text created in php proj updated here
+            helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
+            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+
+            // Necessary to call from here because of UI belonging to extended Application class
+            UI.Root.AddChild(helloText);
+
+            //// Camera
+            //cameraNode = scene.CreateChild();
+            //var camera = cameraNode.CreateComponent<Camera>();
+
+            //// Viewport
             var viewport = new Viewport(scene, camera, null);
             Renderer.SetViewport(0, viewport);
-            //viewport.RenderPath.Append(CoreAssets.PostProcess.FXAA2);
+            ////viewport.RenderPath.Append(CoreAssets.PostProcess.FXAA2);
 
+            // Setting Application properties
             Input.Enabled = true;
             // FPS
             new MonoDebugHud(this).Show(Color.Green, 25);

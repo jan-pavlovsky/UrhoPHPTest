@@ -1,6 +1,7 @@
 ﻿using System;
 using Urho;
 using Urho.Gui;
+using Urho.Resources;
 using Urho.Shapes;
 
 namespace Urho
@@ -15,6 +16,16 @@ namespace Urho
         public static Octree CreateOctree(Scene scene)
         {
             return scene.CreateComponent<Octree>();
+        }
+
+        public static Light CreateLight(Node node)
+        {
+            return node.CreateComponent<Light>();
+        }
+
+        public static Camera CreateCamera(Node node)
+        {
+            return node.CreateComponent<Camera>();
         }
     }
 }
