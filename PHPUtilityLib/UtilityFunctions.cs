@@ -27,5 +27,9 @@ namespace Urho
         {
             return node.CreateComponent<Camera>();
         }
+        public static Skybox CreateSkybox(Node node)
+        {
+            return node.CreateComponent<Skybox>();
+        }
     }
 }

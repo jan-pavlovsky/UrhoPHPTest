@@ -23,6 +23,7 @@ class App
     public $cloudsNode;
     public $cameraNode;
 
+    public $skybox;
     public $camera;
     public $viewport;
     public $scene;
@@ -104,4 +105,20 @@ class App
             //$this->viewport = new Viewport($this->scene, $this->camera, $rp);
         }
 
+        public function createSkybox(Material $skyboxMaterial)
+        {
+            // Stars (Skybox)
+            $this->skyboxNode = $this->scene->CreateChild();
+            $this->skybox = UtilityFunctions::CreateSkybox($this->skyboxNode);
+            $this->skybox->SetMaterial($skyboxMaterial);
+        }
+
+        public function runRotations() {
+        // Run a an action to spin the Earth (7 degrees per second)
+        $this->rootNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0,-7,0)));
+        // Spin clouds:
+        $this->cloudsNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0, 1, 0)));
+        // Zoom effect:
+        //await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
+        }
 }

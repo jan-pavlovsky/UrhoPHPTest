@@ -10,13 +10,14 @@ namespace UrhoPHPTest
     public class MyApp : Application
     {
         Text helloText;
-        Node cameraNode;
         Camera camera;
+        Node cameraNode;
         Node earthNode;
         Node rootNode;
         Node cloudsNode;
         Scene scene;
         Viewport viewport;
+        Skybox skybox;
         float yaw, pitch;
 
         App app;
@@ -31,6 +32,8 @@ namespace UrhoPHPTest
             cloudsNode = ((Node)app.cloudsNode.AsObject());
             viewport = ((Viewport)app.viewport.AsObject());
             camera = ((Camera)app.camera.AsObject());
+            cameraNode = ((Node)app.cameraNode.AsObject());
+            skybox = ((Skybox)app.skybox.AsObject());
         }
 
         [Preserve]
@@ -74,6 +77,9 @@ namespace UrhoPHPTest
 
             app.createCameraAndView();
 
+            Material skyboxMaterial = Material.SkyboxFromImage("Textures/Space.png");
+            app.createSkybox(skyboxMaterial);
+
             //Create the references to objects created in PHP inside MyApp UrhoSharp Application
             CreatePHPReferences();
 
@@ -98,17 +104,17 @@ namespace UrhoPHPTest
             // FPS
             new MonoDebugHud(this).Show(Color.Green, 25);
 
-            // Stars (Skybox)
-            var skyboxNode = scene.CreateChild();
-            var skybox = skyboxNode.CreateComponent<Skybox>();
+            //// Stars (Skybox)
+            //var skyboxNode = scene.CreateChild();
+            //var skybox = skyboxNode.CreateComponent<Skybox>();
             skybox.Model = CoreAssets.Models.Box;
-            skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
+            //skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
 
-            // Run a an action to spin the Earth (7 degrees per second)
+            //// Run a an action to spin the Earth (7 degrees per second)
             rootNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: -7, deltaAngleZ: 0)));
-            // Spin clouds:
-            cloudsNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: 1, deltaAngleZ: 0)));
-            // Zoom effect:
+            //// Spin clouds:
+            //cloudsNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: 1, deltaAngleZ: 0)));
+            //// Zoom effect:
             await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
 
             AddCity(0, 0, "(0, 0)");
