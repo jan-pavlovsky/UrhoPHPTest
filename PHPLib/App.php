@@ -113,12 +113,12 @@ class App
             $this->skybox->SetMaterial($skyboxMaterial);
         }
 
-        public function runRotations() {
-        // Run a an action to spin the Earth (7 degrees per second)
-        $this->rootNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0,-7,0)));
-        // Spin clouds:
-        $this->cloudsNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0, 1, 0)));
-        // Zoom effect:
-        //await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
+        public function runRotations($earth, $clouds) {
+            // Run a an action to spin the Earth (7 degrees per second)
+            $this->rootNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0,$earth,0)));
+            // Spin clouds:
+            $this->cloudsNode->RunActions(new Actions\RepeatForever(new Actions\RotateBy(1, 0, $clouds, 0)));
+            // Zoom effect:
+            //await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
         }
 }

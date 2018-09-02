@@ -77,9 +77,9 @@ namespace UrhoPHPTest
 
             app.createCameraAndView();
 
-            Material skyboxMaterial = Material.SkyboxFromImage("Textures/Space.png");
-            app.createSkybox(skyboxMaterial);
-
+            //Material skyboxMaterial = Material.SkyboxFromImage("Textures/Space.png");
+            //app.createSkybox(skyboxMaterial);
+                
             //Create the references to objects created in PHP inside MyApp UrhoSharp Application
             CreatePHPReferences();
 
@@ -98,23 +98,21 @@ namespace UrhoPHPTest
             var viewport = new Viewport(scene, camera, null);
             Renderer.SetViewport(0, viewport);
             ////viewport.RenderPath.Append(CoreAssets.PostProcess.FXAA2);
-
+            
             // Setting Application properties
             Input.Enabled = true;
             // FPS
             new MonoDebugHud(this).Show(Color.Green, 25);
 
-            //// Stars (Skybox)
-            //var skyboxNode = scene.CreateChild();
-            //var skybox = skyboxNode.CreateComponent<Skybox>();
+            // Stars (Skybox)
+            var skyboxNode = scene.CreateChild();
+            var skybox = skyboxNode.CreateComponent<Skybox>();
             skybox.Model = CoreAssets.Models.Box;
-            //skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
+            skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
 
-            //// Run a an action to spin the Earth (7 degrees per second)
-            rootNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: -7, deltaAngleZ: 0)));
-            //// Spin clouds:
-            //cloudsNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: 1, deltaAngleZ: 0)));
-            //// Zoom effect:
+            // Run a an action to spin the Earth (7 degrees per second)
+            app.runRotations(-7, 1);
+
             await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
 
             AddCity(0, 0, "(0, 0)");
