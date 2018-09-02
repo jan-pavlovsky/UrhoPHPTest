@@ -121,4 +121,33 @@ class App
             // Zoom effect:
             //await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
         }
+
+        public function AddCity(number $lat, number $lon, number $name)
+        {
+            $height = $this->earthNode->Scale->Y / 2;
+
+            $lat = pi() * lat / 180 - pi() / 2;
+            $lon = pi() * lon / 180;
+
+            $x = $height * sin($lat) * cos($lon);
+            $z = $height * sin($lat) * sin($lon);
+            $y = $height * cos($lat);
+
+            $markerNode = $this->rootNode->CreateChild();
+            $markerNode->Scale = new Vector3(0.1, 0.1, 0.1);
+            $markerNode->Position = new Vector3($x, $y, $z);
+            UtilityFunctions::CreateSphereComponent($markerNode);
+
+            $textPos = $markerNode->Position;
+            $textPos->Normalize();
+
+            $textNode = $markerNode->CreateChild();
+            $textNode->Position = textPos * 2;
+            $textNode->SetScale(3);
+            $textNode->LookAt(new Vector3(0,0,0), new Vector3(0, 1, 0), TransformSpace::Parent);
+            
+
+            //Because PHP does not know generics and there is problem with loading fonts, we create the actual text in a C# utility function
+            UtilityFunctions::CreateCityText($textNode, $name);
+        }
 }

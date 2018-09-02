@@ -115,13 +115,13 @@ namespace UrhoPHPTest
 
             await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
 
-            AddCity(0, 0, "(0, 0)");
-            AddCity(53.9045f, 27.5615f, "Minsk");
-            AddCity(51.5074f, 0.1278f, "London");
-            AddCity(40.7128f, -74.0059f, "New-York");
-            AddCity(37.7749f, -122.4194f, "San Francisco");
-            AddCity(39.9042f, 116.4074f, "Beijing");
-            AddCity(-31.9505f, 115.8605f, "Perth");
+            app.AddCity(0, 0, "(0, 0)");
+            app.AddCity(53.9045f, 27.5615f, "Minsk");
+            app.AddCity(51.5074f, 0.1278f, "London");
+            app.AddCity(40.7128f, -74.0059f, "New-York");
+            app.AddCity(37.7749f, -122.4194f, "San Francisco");
+            app.AddCity(39.9042f, 116.4074f, "Beijing");
+            app.AddCity(-31.9505f, 115.8605f, "Perth");
         }
         public void AddCity(float lat, float lon, string name)
         {
@@ -149,11 +149,6 @@ namespace UrhoPHPTest
             textNode.Position = textPos * 2;
             textNode.SetScale(3f);
             textNode.LookAt(Vector3.Zero, Vector3.Up, TransformSpace.Parent);
-            var text = textNode.CreateComponent<Text3D>();
-            text.SetFont(CoreAssets.Fonts.AnonymousPro, 150);
-            text.EffectColor = Color.Black;
-            text.TextEffect = TextEffect.Shadow;
-            text.Text = name;
         }
 
         protected override void OnUpdate(float timeStep)
