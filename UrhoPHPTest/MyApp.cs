@@ -20,20 +20,29 @@ namespace UrhoPHPTest
         Skybox skybox;
         float yaw, pitch;
 
-        App app;
+        App phpApp;
 
         //An utility function making direct references from C# project to the classes created in PHP.
         private void CreatePHPReferences()
         {
-            helloText = ((Text)app.helloText.AsObject());
-            scene = ((Scene)app.scene.AsObject());
-            rootNode = ((Node)app.rootNode.AsObject());
-            earthNode = ((Node)app.earthNode.AsObject());
-            cloudsNode = ((Node)app.cloudsNode.AsObject());
-            viewport = ((Viewport)app.viewport.AsObject());
-            camera = ((Camera)app.camera.AsObject());
-            cameraNode = ((Node)app.cameraNode.AsObject());
-            skybox = ((Skybox)app.skybox.AsObject());
+            helloText = ((Text)phpApp.helloText.AsObject());
+            scene = ((Scene)phpApp.scene.AsObject());
+            rootNode = ((Node)phpApp.rootNode.AsObject());
+            earthNode = ((Node)phpApp.earthNode.AsObject());
+            cloudsNode = ((Node)phpApp.cloudsNode.AsObject());
+            viewport = ((Viewport)phpApp.viewport.AsObject());
+            camera = ((Camera)phpApp.camera.AsObject());
+            cameraNode = ((Node)phpApp.cameraNode.AsObject());
+            skybox = ((Skybox)phpApp.skybox.AsObject());
+        }
+
+        private void CreateSkybox()
+        {
+            // Stars (Skybox)
+            var skyboxNode = scene.CreateChild();
+            var skybox = skyboxNode.CreateComponent<Skybox>();
+            skybox.Model = CoreAssets.Models.Box;
+            skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
         }
 
         [Preserve]
@@ -57,28 +66,22 @@ namespace UrhoPHPTest
             var ctx = Pchp.Core.Context.CreateEmpty();
            
             //The PHP app class containing all the application 
-            app = new App(ctx, "Hey from C#");
-
-            app.Start();
+            phpApp = new App(ctx, "Hey from C#");
+            phpApp.Start();
 
             // Earth and Moon
-            app.createEarthTexture();
-            app.createMoon();
+            phpApp.createEarthTexture();
+            phpApp.createMoon();
 
-            //Clouds
+            //Clouds material...texture needs to be loaded from here
             var cloudsMaterial = new Material();
             cloudsMaterial.SetTexture(TextureUnit.Diffuse, ResourceCache.GetTexture2D("Textures/Earth_Clouds.jpg"));
             cloudsMaterial.SetTechnique(0, CoreAssets.Techniques.DiffAddAlpha);
 
-            app.createClouds(cloudsMaterial);
-
-            // Light
-            app.createLight();
-
-            app.createCameraAndView();
-
-            //Material skyboxMaterial = Material.SkyboxFromImage("Textures/Space.png");
-            //app.createSkybox(skyboxMaterial);
+            //Create assets rom PHP
+            phpApp.createClouds(cloudsMaterial);
+            phpApp.createLight();
+            phpApp.createCameraAndView();
                 
             //Create the references to objects created in PHP inside MyApp UrhoSharp Application
             CreatePHPReferences();
@@ -86,13 +89,8 @@ namespace UrhoPHPTest
             // Text created in php proj updated here
             helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
             helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
-
             // Necessary to call from here because of UI belonging to extended Application class
             UI.Root.AddChild(helloText);
-
-            //// Camera
-            //cameraNode = scene.CreateChild();
-            //var camera = cameraNode.CreateComponent<Camera>();
 
             //// Viewport
             var viewport = new Viewport(scene, camera, null);
@@ -103,52 +101,19 @@ namespace UrhoPHPTest
             Input.Enabled = true;
             // FPS
             new MonoDebugHud(this).Show(Color.Green, 25);
-
-            // Stars (Skybox)
-            var skyboxNode = scene.CreateChild();
-            var skybox = skyboxNode.CreateComponent<Skybox>();
-            skybox.Model = CoreAssets.Models.Box;
-            skybox.SetMaterial(Material.SkyboxFromImage("Textures/Space.png"));
+            CreateSkybox();
 
             // Run a an action to spin the Earth (7 degrees per second)
-            app.runRotations(-7, 1);
-
+            phpApp.runRotations(-7, 1);
             await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
 
-            app.AddCity(0, 0, "(0, 0)");
-            app.AddCity(53.9045f, 27.5615f, "Minsk");
-            app.AddCity(51.5074f, 0.1278f, "London");
-            app.AddCity(40.7128f, -74.0059f, "New-York");
-            app.AddCity(37.7749f, -122.4194f, "San Francisco");
-            app.AddCity(39.9042f, 116.4074f, "Beijing");
-            app.AddCity(-31.9505f, 115.8605f, "Perth");
-        }
-        public void AddCity(float lat, float lon, string name)
-        {
-            var height = earthNode.Scale.Y / 2f;
-
-            lat = (float)Math.PI * lat / 180f - (float)Math.PI / 2f;
-            lon = (float)Math.PI * lon / 180f;
-
-            float x = height * (float)Math.Sin(lat) * (float)Math.Cos(lon);
-            float z = height * (float)Math.Sin(lat) * (float)Math.Sin(lon);
-            float y = height * (float)Math.Cos(lat);
-
-            var markerNode = rootNode.CreateChild();
-            markerNode.Scale = Vector3.One * 0.1f;
-            markerNode.Position = new Vector3((float)x, (float)y, (float)z);
-            markerNode.CreateComponent<Sphere>();
-            markerNode.RunActionsAsync(new RepeatForever(
-                new TintTo(0.5f, Color.White),
-                new TintTo(0.5f, Randoms.NextColor())));
-
-            var textPos = markerNode.Position;
-            textPos.Normalize();
-
-            var textNode = markerNode.CreateChild();
-            textNode.Position = textPos * 2;
-            textNode.SetScale(3f);
-            textNode.LookAt(Vector3.Zero, Vector3.Up, TransformSpace.Parent);
+            phpApp.AddCity(0, 0, "(0, 0)", earthNode.Scale.Y / 2, Vector3.Up);
+            phpApp.AddCity(53.9045f, 27.5615f, "Minsk", earthNode.Scale.Y / 2f, Vector3.Up);
+            phpApp.AddCity(51.5074f, 0.1278f, "London", earthNode.Scale.Y / 2f, Vector3.Up);
+            phpApp.AddCity(40.7128f, -74.0059f, "New-York", earthNode.Scale.Y / 2f, Vector3.Up);
+            phpApp.AddCity(37.7749f, -122.4194f, "San Francisco", earthNode.Scale.Y / 2f, Vector3.Up);
+            phpApp.AddCity(39.9042f, 116.4074f, "Beijing", earthNode.Scale.Y / 2f, Vector3.Up);
+            phpApp.AddCity(-31.9505f, 115.8605f, "Perth", earthNode.Scale.Y / 2f, Vector3.Up);
         }
 
         protected override void OnUpdate(float timeStep)

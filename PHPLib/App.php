@@ -122,30 +122,29 @@ class App
             //await rootNode.RunActionsAsync(new EaseOut(new MoveTo(2f, new Vector3(0, 0, 12)), 1));
         }
 
-        public function AddCity(number $lat, number $lon, number $name)
+        public function AddCity(float $lat, float $lon, string $name, float $height, Vector3 $up)
         {
-            $height = $this->earthNode->Scale->Y / 2;
+            $lat = (float)((pi() * $lat / 180.0) - (pi() / 2.0));
+            $lon = (float)(pi() * $lon / 180.0);
 
-            $lat = pi() * lat / 180 - pi() / 2;
-            $lon = pi() * lon / 180;
-
-            $x = $height * sin($lat) * cos($lon);
-            $z = $height * sin($lat) * sin($lon);
-            $y = $height * cos($lat);
+            (float)$x = $height * sin($lat) * cos($lon);
+            (float)$z = $height * sin($lat) * sin($lon);
+            (float)$y = $height * cos($lat);
 
             $markerNode = $this->rootNode->CreateChild();
             $markerNode->Scale = new Vector3(0.1, 0.1, 0.1);
             $markerNode->Position = new Vector3($x, $y, $z);
+            
             UtilityFunctions::CreateSphereComponent($markerNode);
+            UtilityFunctions::TintColor($markerNode);
 
-            $textPos = $markerNode->Position;
-            $textPos->Normalize();
+            ///necessary for normalizing coordinates
+            $length = sqrt($x*$x + $y*$y + $z*$z);
 
             $textNode = $markerNode->CreateChild();
-            $textNode->Position = textPos * 2;
-            $textNode->SetScale(3);
-            $textNode->LookAt(new Vector3(0,0,0), new Vector3(0, 1, 0), TransformSpace::Parent);
-            
+            $textNode->Position = new Vector3(2.0* (float)($x / $length),2.0 * ($y / $length),2.0 * (float)($z / $length));
+            $textNode->SetScale(3.0);
+            $textNode->LookAt(new Vector3(0,0,0), $up, TransformSpace::Parent);          
 
             //Because PHP does not know generics and there is problem with loading fonts, we create the actual text in a C# utility function
             UtilityFunctions::CreateCityText($textNode, $name);

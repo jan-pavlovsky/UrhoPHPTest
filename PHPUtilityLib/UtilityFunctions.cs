@@ -1,5 +1,6 @@
 ﻿using System;
 using Urho;
+using Urho.Actions;
 using Urho.Gui;
 using Urho.Resources;
 using Urho.Shapes;
@@ -39,6 +40,13 @@ namespace Urho
             text.EffectColor = Color.Black;
             text.TextEffect = TextEffect.Shadow;
             text.Text = name;
+        }
+
+        public static void TintColor(Node node)
+        {
+            node.RunActionsAsync(new RepeatForever(
+                new TintTo(0.5f, Color.White),
+                new TintTo(0.5f, Randoms.NextColor())));
         }
     }
 }
