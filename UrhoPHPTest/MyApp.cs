@@ -10,14 +10,8 @@ namespace UrhoPHPTest
     public class MyApp : Application
     {
         Text helloText;
-        Camera camera;
-        Node cameraNode;
-        Node earthNode;
-        Node rootNode;
-        Node cloudsNode;
+        Node rootNode, earthNode, cloudsNode, cameraNode;
         Scene scene;
-        Viewport viewport;
-        Skybox skybox;
         float yaw, pitch;
 
         App phpApp;
@@ -30,10 +24,7 @@ namespace UrhoPHPTest
             rootNode = ((Node)phpApp.rootNode.AsObject());
             earthNode = ((Node)phpApp.earthNode.AsObject());
             cloudsNode = ((Node)phpApp.cloudsNode.AsObject());
-            viewport = ((Viewport)phpApp.viewport.AsObject());
-            camera = ((Camera)phpApp.camera.AsObject());
             cameraNode = ((Node)phpApp.cameraNode.AsObject());
-            skybox = ((Skybox)phpApp.skybox.AsObject());
         }
 
         private void CreateSkybox()
@@ -88,12 +79,12 @@ namespace UrhoPHPTest
 
             // Text created in php proj updated here
             helloText.SetColor(new Color(0.5f, 1.0f, 1.0f, 1.0f));
-            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 30);
+            helloText.SetFont(font: CoreAssets.Fonts.AnonymousPro, size: 48);
             // Necessary to call from here because of UI belonging to extended Application class
             UI.Root.AddChild(helloText);
 
             //// Viewport
-            var viewport = new Viewport(scene, camera, null);
+            var viewport = new Viewport(scene, cameraNode.GetComponent<Camera>(), null);
             Renderer.SetViewport(0, viewport);
             ////viewport.RenderPath.Append(CoreAssets.PostProcess.FXAA2);
             
