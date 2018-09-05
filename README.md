@@ -1,6 +1,6 @@
 # UrhoPHPTest
 
-## A Xamarin application using OpenGL throught UrhoSharp Framework written mostly in PHP and compiled with The Peachpie Compiler
+## A Xamarin application using OpenGL through UrhoSharp Framework written mostly in PHP and compiled with The Peachpie Compiler into .NET
 
 ### Build Instructions
 
