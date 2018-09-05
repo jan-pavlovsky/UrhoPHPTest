@@ -2,7 +2,7 @@
 
 ## A Xamarin application using OpenGL throught UrhoSharp Framework written mostly in PHP and compiled with The Peachpie Compiler
 
-##Build Instructions
+### Build Instructions
 
 1. Navigate to the PHPLib folder in terminal
 2. Run `dotnet restore` command to restore used packages
