@@ -3,15 +3,14 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Description>.NET class library in PHP</Description>
     <AssemblyName>PhpLib1</AssemblyName>
     <PackageId>PhpLib1</PackageId>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<VersionSuffix>prerelease</VersionSuffix><!-- we specify version suffix to make this package a pre-release version - this is mandatory since we still have a pre-release versions of dependencies -->
+	  <VersionSuffix>prerelease</VersionSuffix><!-- we specify version suffix to make this package a pre-release version - this is mandatory since we still have a pre-release versions of dependencies -->
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="**/*.php" />
+    <None Include="**/*.php" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +23,4 @@
     <ProjectReference Include="..\PHPUtilityLib\PHPUtilityLib.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <RestoreSources>$(RestoreSources);../packages/UrhoSharp.1.8.51;https://api.nuget.org/v3/index.json</RestoreSources>
-  </PropertyGroup>
 </Project>
