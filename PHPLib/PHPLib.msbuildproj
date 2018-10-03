@@ -1,13 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Peachpie.NET.Sdk/0.9.9">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <OutputType>library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.NET class library in PHP</Description>
     <AssemblyName>PhpLib1</AssemblyName>
     <PackageId>PhpLib1</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<VersionSuffix>prerelease</VersionSuffix><!-- we specify version suffix to make this package a pre-release version - this is mandatory since we still have a pre-release versions of dependencies -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,16 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Peachpie.Compiler.Tools" Version="0.9.0-*" />
-    <PackageReference Include="Peachpie.NET.Sdk" Version="0.9.0-*" PrivateAssets="Build" />
     <PackageReference Include="UrhoSharp" Version="1.8.93" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PHPUtilityLib\PHPUtilityLib.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <RestoreSources>$(RestoreSources);../packages/UrhoSharp.1.8.51;https://api.nuget.org/v3/index.json</RestoreSources>
-  </PropertyGroup>
 </Project>
