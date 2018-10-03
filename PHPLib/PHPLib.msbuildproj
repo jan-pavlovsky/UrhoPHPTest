@@ -2,14 +2,13 @@
   <PropertyGroup>
     <OutputType>library</OutputType>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>.NET class library in PHP</Description>
     <AssemblyName>PhpLib1</AssemblyName>
     <PackageId>PhpLib1</PackageId>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="**/*.php" />
+    <None Include="**/*.php" />
   </ItemGroup>
 
   <ItemGroup>
