@@ -14,7 +14,7 @@ namespace UrhoPHPTest
         MyApp app;
 
         protected override async void OnCreate(Bundle bundle)
-        {
+        {   
             base.OnCreate(bundle);
             var mLayout = new FrameLayout(this);
             surface = UrhoSurface.CreateSurface(this);

@@ -5,16 +5,13 @@ namespace Urho;
 class App
 {
     public $helloText;
+    public $scene;
 
     public $earthNode;
     public $rootNode;
     public $cloudsNode;
     public $cameraNode;
     public $lightNode;
-
-    public $camera;
-    public $viewport;
-    public $scene;
 
     public function __construct(string $text) {
         $this->myText = $text;
@@ -30,19 +27,24 @@ class App
         
         $this->scene = new Scene();
         UtilityFunctions::CreateOctree($this->scene);
-        
-        // Create a node for the Earth
+
         $this->rootNode = $this->scene->CreateChild();
         $this->rootNode->Position = new Vector3(0, 0, 20);
         
+        createEarthNode();
+    }
+
+    // Create a node for the Earth
+    public function createEarthNode()
+    {
         $this->earthNode = $this->rootNode->CreateChild();
         $this->earthNode->SetScale(5);
         $this->earthNode->Rotation = new Quaternion(0, 180, 0);
     }
 
+    // Create a static model component - Sphere
     public function createEarthTexture()
     {
-        // Create a static model component - Sphere:
         $earthSphere = UtilityFunctions::CreateSphereComponent($this->earthNode);
         $earthSphere->SetMaterial(Material::FromImage("Textures/Earth.jpg"));
     }
@@ -81,9 +83,9 @@ class App
     {
         // Camera
         $this->cameraNode = $this->scene->CreateChild();
-        $this->camera = UtilityFunctions::CreateCamera($this->cameraNode);
+        $camera = UtilityFunctions::CreateCamera($this->cameraNode);
         //$rp = new RenderPath();
-        //$this->viewport = new Viewport($this->scene, $this->camera, $rp);
+        //$viewport = new Viewport($this->scene, $camera, $rp);
     }
     public function createSkybox(Material $skyboxMaterial)
     {
